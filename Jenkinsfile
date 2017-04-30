@@ -11,10 +11,8 @@ pipeline {
         }
 
         stage('Only Master stage') {
-            if (env.BRANCH_NAME == 'master') {
-                steps {
-                    echo 'this is master'
-                }
+            steps {
+                echo 'this is master'
             }
         }
 
