@@ -15,7 +15,7 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == 'master') {
                         echo 'this is master'
-                        build './*'
+                        build './foo-branch'
                     }
                     echo 'hoge'
                 }
