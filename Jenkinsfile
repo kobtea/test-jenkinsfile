@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Check branch') {
             steps {
-                echo 'this branch is' + env.BRANCH_NAME
+                echo 'this branch is ' + env.BRANCH_NAME
                 sh 'ls -l'
             }
         }
