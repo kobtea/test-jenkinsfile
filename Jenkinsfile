@@ -15,15 +15,10 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == 'master') {
                         echo 'this is master'
+                        build './*'
                     }
                     echo 'hoge'
                 }
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
             }
         }
     }
