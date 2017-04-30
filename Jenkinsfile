@@ -10,8 +10,8 @@ pipeline {
             }
         }
 
-        if (true) {
-            stage('Only Master stage') {
+        stage('Only Master stage') {
+            if (true) {
                 steps {
                     echo 'this is master'
                 }
