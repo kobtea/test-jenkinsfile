@@ -3,19 +3,35 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Check branch') {
             steps {
-                echo 'Building..'
+                echo 'this branch is' + env.BRANCH_NAME
+                sh 'ls -l'
             }
         }
-        stage('Test') {
+
+        stage('Kick other branches') {
             steps {
-                echo 'Testing..'
+                script {
+                    if (env.BRANCH_NAME == 'master') {
+                        echo 'this is master'
+                        def branches = sh(script: 'git branch -r | egrep -v "HEAD|master" | awk -F"/" \'{print $NF}\'', returnStdout: true).trim().tokenize('\r?\n')
+                        for (branch in branches) {
+                            build './' + branch
+                        }
+                    }
+                }
             }
         }
-        stage('Deploy') {
+
+        stage('Checkout from master branch') {
             steps {
-                echo 'Deploying....'
+                script {
+                    if (env.BRANCH_NAME != 'master') {
+                        sh 'git checkout origin/master -- master.txt'
+                        sh 'ls -l'
+                    }
+                }
             }
         }
     }
