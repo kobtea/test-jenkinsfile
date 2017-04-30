@@ -11,10 +11,11 @@ pipeline {
         }
 
         stage('Only Master stage') {
-            if (true) {
-                steps {
+            steps {
+                if (true) {
                     echo 'this is master'
                 }
+                echo 'hoge'
             }
         }
 
