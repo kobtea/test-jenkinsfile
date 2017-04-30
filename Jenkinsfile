@@ -5,12 +5,12 @@ pipeline {
     stages {
         stage('Check branch') {
             steps {
-                echo env.BRANCH_NAME
+                echo 'this branch is' + env.BRANCH_NAME
                 sh 'ls -l'
             }
         }
 
-        stage('Only Master stage') {
+        stage('Kick other branches') {
             steps {
                 script {
                     if (env.BRANCH_NAME == 'master') {
@@ -19,6 +19,17 @@ pipeline {
                         for (branch in branches) {
                             build './' + branch
                         }
+                    }
+                }
+            }
+        }
+
+        stage('Checkout from master branch') {
+            steps {
+                script {
+                    if (env.BRANCH_NAME != 'master') {
+                        sh 'git checkout origin/master -- master.txt'
+                        sh 'ls -l'
                     }
                 }
             }
