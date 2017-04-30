@@ -15,9 +15,11 @@ pipeline {
                 script {
                     if (env.BRANCH_NAME == 'master') {
                         echo 'this is master'
-                        build './foo-branch'
+                        def branches = sh(script: 'git branch -r | egrep -v "HEAD|master" | awk -F"/" \'{print $NF}\'', returnStdout: true).trim().tokenize('\r?\n')
+                        for (branch in branches) {
+                            build './' + branch
+                        }
                     }
-                    echo 'hoge'
                 }
             }
         }
